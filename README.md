@@ -11,3 +11,9 @@ for f in *.aiff; do ffmpeg -i "$f" "${f%.aiff}.wav"; done
 (Tip pulled from the competition's forums.)
 
 Possible dependencies will be CARFAC, Slaney's Auditory Toolbox
+
+"mobyd" was cloned from 
+
+https://github.com/nmkridler/moby
+
+Using it for learning purposes, as it won the competition.
