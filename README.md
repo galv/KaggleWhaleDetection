@@ -12,7 +12,7 @@ for f in *.aiff; do ffmpeg -i "$f" "${f%.aiff}.wav"; done
 
 Possible dependencies will be CARFAC, Slaney's Auditory Toolbox
 
-"mobyd" was cloned from 
+"moby" was cloned from 
 
 https://github.com/nmkridler/moby
 
