@@ -78,3 +78,4 @@ data/
 #Don't need backup files.
 *~
 .DS_Store
+.metadata
