@@ -12,10 +12,19 @@ DATA_DIR = os.getcwd() + '/../data/'
 
 def main():
     clf = LogisticRegression()
-    train(DATA_DIR + '/train_1000_v.csv',clf)
-    test(DATA_DIR +'/test_1000_v.csv',clf)
+    (X_train, y_train) = readTrainData(DATA_DIR + '/train_1000_v.csv',clf)
+    clf.fit(X_train, y_train)
+    #print clf.predict(X_train)
 
-def train(trainFile, clf):
+    return (clf, X_train, y_train)
+    #test(DATA_DIR +'/test_1000_v.csv',clf)
+    #pdb.set_trace()
+
+    #test(DATA_DIR + '/train_1000_v.csv',clf)
+
+    #pdb.set_trace()
+
+def readTrainData(trainFile, clf):
     i_f = open(trainFile)
     reader = csv.reader(i_f)
     soundList = list()
@@ -27,10 +36,12 @@ def train(trainFile, clf):
         (rate, sig) = wav.read(DATA_DIR + 'train/' + fileName)
         mfcc_feat = mfcc(sig,rate)
         soundList.append(mfcc_feat)
-        isWhaleList.append(line[1])        
+        isWhaleList.append(line[1])
     soundArr = np.array(soundList)
     isWhaleArr = np.array(isWhaleList)#, dtype = type(np.int16))
-    clf.fit(soundArr, isWhaleArr)
+    return (soundArr, isWhaleArr)
+    #clf.fit(soundArr, isWhaleArr)
+
     #pdb.set_trace()
 
 def test(testFile, clf):
@@ -38,17 +49,23 @@ def test(testFile, clf):
     reader = csv.reader(i_f)
     soundList = list()
     isWhaleList = list()
+    next(i_f)
     for line in reader:
         fileName = line[0]
         fileName = fileName[:line[0].find('.aiff')] + '.wav' #Change .aiff ending to .wav
         (rate, sig) = wav.read(DATA_DIR + 'train/' + fileName)
         mfcc_feat = mfcc(sig,rate)
         soundList.append(mfcc_feat)
-        isWhaleList.append(line[1])        
+        isWhaleList.append(line[1])
     soundArr = np.array(soundList)
     isWhaleArr = np.array(isWhaleList)#, dtype = type(np.int16))
     
-    pdb.set_trace()
+    #predictedWhaleArr = clf.predict(soundArr)
+    
+    #accuracy = (predictedWhaleArr == isWhaleArr).all()
+    #print accuracy
+
+    return 
     
 if __name__ == "__main__":
-    main()
+    (clf, X, y) = main()
